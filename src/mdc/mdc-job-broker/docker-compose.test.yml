@@ -1,0 +1,31 @@
+version: '3.5'
+
+services:
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  mdc-job-broker:
+    image: mdc-job-broker:latest
+    container_name: mdc-job-broker
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+
+  mdc-app-test:
+    image: mdc-celery-test-app:latest
+    container_name: mdc-celery-test-app
+    build:
+      context: tests/test_app
+      dockerfile: Dockerfile
+    depends_on:
+      - redis
+      - mdc-job-broker
+    ports:
+      - 8080:8080

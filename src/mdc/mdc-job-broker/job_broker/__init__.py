@@ -8,4 +8,5 @@ app = Celery(
 app.conf.update(task_soft_time_limit=30, task_time_limit=120)
 app.autodiscover_tasks([
     'job_broker.tasks.hello',
+    'job_broker.tasks.influxdb_handler'
 ])

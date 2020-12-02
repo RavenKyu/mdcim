@@ -1,0 +1,45 @@
+---
+1-A:
+  use: True
+  description: Test
+  comm:
+    type: tcp
+    setting:
+      host: dummy-modbus-server
+      port: 502
+
+  seconds: 3
+  code: |
+    def main():
+        a = read_holding_registers('-a 40001 -c 6')
+        return a
+  template:
+    - key: Temperature-T
+      note: Temperature Top
+      type: B16_INT
+      scale: 0.1
+
+    - key: Humidity-T
+      note: Humidity Top
+      type: B16_INT
+      scale: 0.1
+
+    - key: Temperature-M
+      note: Temperature Middle
+      type: B16_INT
+      scale: 0.1
+
+    - key: Humidity-M
+      note: Temperature Middle
+      type: B16_INT
+      scale: 0.1
+
+    - key: Temperature-B
+      note: Temperature Bottom
+      type: B16_INT
+      scale: 0.1
+
+    - key: Humidity-B
+      note: Temperature Bottom
+      type: B16_INT
+      scale: 1.0

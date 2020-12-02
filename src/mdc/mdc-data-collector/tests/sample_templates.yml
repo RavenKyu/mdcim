@@ -1,0 +1,37 @@
+---
+1-A:
+  interval_sec: 5
+  templates:
+    Temperature-T:
+      measurement: temperature
+      fields: temperature
+      tags:
+        - location: top
+    Temperature-M:
+      measurement: temperature
+      fields: temperature
+      tags:
+        - location: middle
+    Temperature-B:
+      measurement: temperature
+      fields: temperature
+      tags:
+        - location: bottom
+
+    Humidity-T:
+      measurement: humidity
+      fields: humidity
+      tags:
+        - location: top
+    Humidity-M:
+      measurement: humidity
+      fields: humidity
+      tags:
+        - location: middle
+    Humidity-B:
+      measurement: humidity
+      fields: humidity
+      tags:
+        - location: bottom
+
+

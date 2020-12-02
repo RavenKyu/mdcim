@@ -1,0 +1,29 @@
+version: '3.5'
+volumes:
+  modbus-command-line-client: {}
+
+services:
+  modbus-command-line-client:
+    image: modbusclc-dev
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: modbus-command-line-client-dev
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    volumes:
+      - .:/src
+      - modbus-command-line-client:/usr/local/lib/python3.7/site-packages/
+    command: |
+      /bin/sh start-dev.sh
+
+  dummy-modbus-server:
+    image: dummy-modbus-server:latest
+    build:
+      context: .
+      dockerfile: dummy-modbus-server/Dockerfile
+    container_name: dummy-modbus-server
+    ports:
+      - 502:502
+    command: |
+      -a 0.0.0.0 -p 502

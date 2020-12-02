@@ -1,0 +1,87 @@
+version: '3.5'
+services:
+  grafana:
+    image: grafana/grafana
+    restart: always
+    container_name: dcim-grafana
+    volumes:
+      - ./dhv/grafana:/var/lib/grafana
+    depends_on:
+      - influxdb
+    expose:
+      - 3000
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin_01
+
+  restful-modbus-api:
+    image: mdc-restful-modbus-api:latest
+    build:
+      context: ./mdc/mdc-restful-modbus-api
+      dockerfile: Dockerfile
+    container_name: mdc-restful-modbus-api
+    ports:
+      - 15000:5000
+    volumes:
+      - ./mdc/mdc-restful-modbus-api:/root
+    command: |
+      -a 0.0.0.0 -p 5000 -t /root/tests/src0102.yml
+    restart: always
+
+  dummy-modbus-server:
+    image: dummy-modubs-server:latest
+    build:
+      context: ./mdc/mdc-restful-modbus-api/dummy-modbus-server
+      dockerfile: Dockerfile
+    container_name: dummy-modbus-server
+    ports:
+      - 502:502
+    command: |
+      -a 0.0.0.0 -p 502
+    restart: always
+
+  influxdb:
+    image: mdc-influxdb:1.7-alpine
+    build:
+      context: ./databases/mdc-influxdb
+      dockerfile: Dockerfile
+    container_name: mdc-influxdb
+    ports:
+      - 8086:8086
+    restart: always
+
+  job-broker:
+    image: mdc-job-broker:latest
+    build:
+      context: ./mdc/mdc-job-broker
+      dockerfile: Dockerfile
+    container_name: mdc-job-broker
+    restart: always
+
+  redis:
+    container_name: redis
+    hostname: redis
+    image: redis
+    ports:
+      - "6379:6379"
+    restart: always
+
+  data-collector:
+    image: mdc-data-collector:latest
+    build:
+      context: ./mdc/mdc-data-collector
+      dockerfile: Dockerfile
+    container_name: mdc-data-collector
+    volumes:
+      - ./mdc/mdc-data-collector:/root
+    command: |
+      -a 0.0.0.0 -p 15001 -t /root/tests/src0102.yml
+    restart: always
+
+networks:
+  default:
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.34.0.0/16

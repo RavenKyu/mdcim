@@ -1,2 +1,5 @@
 FROM influxdb:1.7-alpine
-ADD mdc/mdc-influxdb/influxdb.conf /etc/influxdb
+RUN apk add tzdata && \
+    cp /usr/share/zoneinfo/Asia/Seoul /etc/localtime && \
+    echo "Asia/Seoul" > /etc/timezone
+ADD influxdb.conf /etc/influxdb

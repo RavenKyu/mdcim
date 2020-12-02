@@ -1,0 +1,17 @@
+version: '3.5'
+services:
+  restful-modbus-api:
+    image: restful-modbus-api:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: restful-modbus-api
+
+  dummy-modbus-server:
+    image: dummy-modubs-server:latest
+    build:
+      context: .
+      dockerfile: dummy-modbus-server/Dockerfile
+    container_name: dummy-modbus-server
+
+

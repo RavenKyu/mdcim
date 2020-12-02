@@ -1,0 +1,52 @@
+---
+SRC-1:
+  interval_sec: 5
+  templates:
+    PERIPHERAL_DEVICE_01:
+      measurement: temperature
+      fields: temperature
+      tags:
+        - location: top
+
+    PERIPHERAL_DEVICE_02:
+      measurement: humidity
+      fields: humidity
+      tags:
+        - location: top
+
+    PERIPHERAL_DEVICE_03:
+      measurement: temperature
+      fields: temperature
+      tags:
+        - location: middle
+
+    PERIPHERAL_DEVICE_04:
+      measurement: humidity
+      fields: humidity
+      tags:
+        - location: middle
+
+    PERIPHERAL_DEVICE_05:
+      measurement: temperature
+      fields: temperature
+      tags:
+        - location: bottom
+
+    PERIPHERAL_DEVICE_06:
+      measurement: humidity
+      fields: humidity
+      tags:
+        - location: bottom
+
+    PERIPHERAL_DEVICE_07:
+      measurement: switch
+      fields: switch
+      tags:
+        - location: door_f
+
+    PERIPHERAL_DEVICE_08:
+      measurement: switch
+      fields: switch
+      tags:
+        - location: door_r
+

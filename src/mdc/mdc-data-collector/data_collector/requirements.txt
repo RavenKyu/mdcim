@@ -1,0 +1,8 @@
+flask
+flask_restx
+pymodbus
+PyYaml
+apscheduler
+celery
+requests
+redis
